@@ -1,0 +1,31 @@
+<Window x:Class="OnlineStoreApp.Views.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Регистрация" Height="500" Width="400"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Background="#F8FAFC"  Icon="/Images/app.ico">
+    <StackPanel Margin="36,28">
+        <TextBlock Text="Создать аккаунт" FontSize="18" FontWeight="Bold"
+                   FontFamily="Segoe UI" Foreground="#0F172A" Margin="0,0,0,24"/>
+
+        <Label Content="Имя *"/>
+        <TextBox x:Name="TxtName"  Margin="0,0,0,12"/>
+        <Label Content="Email *"/>
+        <TextBox x:Name="TxtEmail" Margin="0,0,0,12"/>
+        <Label Content="Пароль *"/>
+        <PasswordBox x:Name="PwdPass" Margin="0,0,0,12"/>
+        <Label Content="Телефон"/>
+        <TextBox x:Name="TxtPhone" Margin="0,0,0,12"/>
+        <Label Content="Адрес"/>
+        <TextBox x:Name="TxtAddr"  Margin="0,0,0,16"/>
+
+        <Border x:Name="PanelErr" Background="#FEF2F2" CornerRadius="6"
+                BorderBrush="#FECACA" BorderThickness="1"
+                Padding="10,7" Margin="0,0,0,12" Visibility="Collapsed">
+            <TextBlock x:Name="TxtErr" Foreground="#DC2626" FontSize="12"
+                       TextWrapping="Wrap" FontFamily="Segoe UI"/>
+        </Border>
+
+        <Button Content="Зарегистрироваться" Style="{StaticResource BtnPrimary}"
+                Height="38" FontSize="14" Click="BtnReg_Click"/>
+    </StackPanel>
+</Window>

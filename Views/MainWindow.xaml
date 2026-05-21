@@ -1,0 +1,203 @@
+<Window x:Class="OnlineStoreApp.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Online Store — Управление базой данных"
+        Height="680" Width="1100"
+        WindowStartupLocation="CenterScreen"
+        Background="#F8FAFC"
+		WindowState="Maximized">
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="200"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<!-- Sidebar -->
+		<Border Grid.Column="0" Background="#1E293B">
+			<DockPanel>
+				<!-- Brand -->
+				<Border DockPanel.Dock="Top" Padding="20,20,20,12">
+					<StackPanel>
+						<TextBlock Text="🛒 Online Store" Foreground="White"
+                                   FontSize="14" FontWeight="SemiBold" FontFamily="Segoe UI"/>
+						<TextBlock Text="Управление данными" Foreground="#64748B"
+                                   FontSize="11" FontFamily="Segoe UI" Margin="0,2,0,0"/>
+					</StackPanel>
+				</Border>
+
+				<Separator DockPanel.Dock="Top" Background="#334155" Margin="16,0"/>
+
+				<!-- Navigation -->
+				<StackPanel DockPanel.Dock="Top" Margin="0,8,0,0">
+					<TextBlock Text="ТАБЛИЦЫ" Foreground="#475569" FontSize="10"
+                               FontFamily="Segoe UI" FontWeight="SemiBold"
+                               Margin="24,8,0,6"/>
+
+					<Button x:Name="BtnNavUsers" Content="👤  Пользователи"
+                            Style="{StaticResource NavButtonActive}"
+                            Click="NavButton_Click" Tag="Users"/>
+					<Button x:Name="BtnNavCategories" Content="📂  Категории"
+                            Style="{StaticResource NavButton}"
+                            Click="NavButton_Click" Tag="Categories"/>
+					<Button x:Name="BtnNavProducts" Content="📦  Товары"
+                            Style="{StaticResource NavButton}"
+                            Click="NavButton_Click" Tag="Products"/>
+					<Button x:Name="BtnNavOrders" Content="🧾  Заказы"
+                            Style="{StaticResource NavButton}"
+                            Click="NavButton_Click" Tag="Orders"/>
+					<Button x:Name="BtnNavOrderItems" Content="📋  Состав заказов"
+                            Style="{StaticResource NavButton}"
+                            Click="NavButton_Click" Tag="OrderItems"/>
+				</StackPanel>
+
+				<!-- Dashboard -->
+				<StackPanel DockPanel.Dock="Top" Margin="0,8,0,0">
+					<TextBlock Text="АНАЛИТИКА" Foreground="#475569" FontSize="10"
+                               FontFamily="Segoe UI" FontWeight="SemiBold"
+                               Margin="24,8,0,6"/>
+					<Button x:Name="BtnNavDashboard" Content="📊  Dashboard"
+                            Style="{StaticResource NavButton}"
+                            Click="BtnNavDashboard_Click"/>
+					<Button Content="📋  Отчёты"
+                            Style="{StaticResource NavButton}"
+                            Click="BtnNavReports_Click"/>
+				</StackPanel>
+
+				<!-- Поддержка -->
+				<StackPanel DockPanel.Dock="Top" Margin="0,8,0,0">
+					<TextBlock Text="СИСТЕМА" Foreground="#475569" FontSize="10"
+                               FontFamily="Segoe UI" FontWeight="SemiBold"
+                               Margin="24,8,0,6"/>
+					<Button Content="🛡  Поддержка"
+                            Style="{StaticResource NavButton}"
+                            Click="BtnNavBackup_Click"/>
+				</StackPanel>
+
+				<!-- Disconnect at bottom -->
+				<StackPanel DockPanel.Dock="Bottom" Margin="8,0,8,12">
+					<Separator Background="#334155" Margin="8,0,8,8"/>
+					<Button Content="⏻  Отключиться" Style="{StaticResource NavButton}"
+                            Click="BtnDisconnect_Click"/>
+				</StackPanel>
+
+				<Grid/>
+			</DockPanel>
+		</Border>
+
+		<!-- Main Content -->
+		<Grid Grid.Column="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="60"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+
+			<!-- Top Bar -->
+			<Border Grid.Row="0" Background="White"
+                    BorderBrush="#E2E8F0" BorderThickness="0,0,0,1"
+                    Padding="24,0">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="8"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="8"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+
+					<StackPanel VerticalAlignment="Center">
+						<TextBlock x:Name="TxtPageTitle" Text="Пользователи"
+                                   FontSize="17" FontWeight="SemiBold"
+                                   Foreground="#0F172A" FontFamily="Segoe UI"/>
+						<TextBlock x:Name="TxtPageSubtitle" Text=""
+                                   FontSize="12" Foreground="#64748B" FontFamily="Segoe UI"/>
+					</StackPanel>
+
+					<Button Grid.Column="1" x:Name="BtnAdd"
+                            Content="+ Добавить"
+                            Style="{StaticResource PrimaryButton}"
+                            Click="BtnAdd_Click" Height="34"/>
+
+					<Button Grid.Column="3" x:Name="BtnEdit"
+                            Content="✏ Редактировать"
+                            Style="{StaticResource SecondaryButton}"
+                            IsEnabled="False" Height="34"
+                            Click="BtnEdit_Click"/>
+
+					<Button Grid.Column="5" x:Name="BtnDelete"
+                            Content="✕ Удалить"
+                            Style="{StaticResource DangerButton}"
+                            IsEnabled="False" Height="34"
+                            Click="BtnDelete_Click"/>
+				</Grid>
+			</Border>
+
+			<!-- Content Area -->
+			<Grid Grid.Row="1" Margin="24,20,24,24">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+
+				<!-- Search Bar -->
+				<Border Grid.Row="0" Background="White"
+                        BorderBrush="#E2E8F0" BorderThickness="1"
+                        CornerRadius="8" Padding="16,12"
+                        Margin="0,0,0,16">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="160"/>
+							<ColumnDefinition Width="Auto"/>
+							<ColumnDefinition Width="Auto"/>
+						</Grid.ColumnDefinitions>
+
+						<TextBox Grid.Column="0" x:Name="TxtSearch"  TextChanged="TxtSearch_TextChanged"
+                                 Margin="0,0,12,0"
+                                 Text="" Height="36"/>
+
+						<ComboBox Grid.Column="1" x:Name="CboSearchField"
+                                  Margin="0,0,12,0" Height="36"/>
+
+						<Button Grid.Column="2" Content="Найти"
+                                Style="{StaticResource PrimaryButton}"
+                                Margin="0,0,8,0" Height="36"
+                                Click="BtnSearch_Click"/>
+
+						<Button Grid.Column="3" Content="Сбросить"
+                                Style="{StaticResource SecondaryButton}"
+                                Height="36" Click="BtnReset_Click"/>
+					</Grid>
+				</Border>
+
+				<!-- Error panel -->
+				<Border x:Name="PanelError" Grid.Row="1"
+                        Background="#FEF2F2" CornerRadius="6"
+                        BorderBrush="#FECACA" BorderThickness="1"
+                        Padding="12,8" Margin="0,0,0,12" Visibility="Collapsed">
+					<TextBlock x:Name="TxtError" Foreground="#DC2626"
+                               FontSize="12" TextWrapping="Wrap" FontFamily="Segoe UI"/>
+				</Border>
+
+				<!-- DataGrid -->
+				<Border Grid.Row="2" Background="White"
+                        BorderBrush="#E2E8F0" BorderThickness="1"
+                        CornerRadius="8">
+					<DataGrid x:Name="MainGrid"
+                              SelectionChanged="MainGrid_SelectionChanged"
+                              Margin="0" BorderThickness="0">
+					</DataGrid>
+				</Border>
+
+				<!-- Bottom row count -->
+				<Grid Grid.Row="3" Margin="0,10,0,0">
+					<TextBlock x:Name="TxtRowCount" VerticalAlignment="Center"
+                               Foreground="#64748B" FontSize="12" FontFamily="Segoe UI"/>
+				</Grid>
+			</Grid>
+		</Grid>
+	</Grid>
+</Window>

@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01.01.2025" ReportInfo.Modified="01.01.2025" ReportInfo.CreatorVersion="2024.2.3">
+	<Dictionary>
+		<TableDataSource Name="SalesCat" ReferenceName="SalesCat" DataType="System.Int32" Enabled="true">
+			<Column Name="category" DataType="System.String"/>
+			<Column Name="orders_count" DataType="System.Int32"/>
+			<Column Name="units_sold" DataType="System.Int32"/>
+			<Column Name="avg_price" DataType="System.Decimal"/>
+			<Column Name="min_price" DataType="System.Decimal"/>
+			<Column Name="max_price" DataType="System.Decimal"/>
+			<Column Name="revenue" DataType="System.Decimal"/>
+		</TableDataSource>
+		<Parameter Name="ParamCount" DataType="System.String"/>
+		<Parameter Name="ParamTotal" DataType="System.String"/>
+		<Parameter Name="ParamTotalOrders" DataType="System.String"/>
+		<Parameter Name="ParamTotalUnits" DataType="System.String"/>
+		<Parameter Name="ParamDateFrom" DataType="System.String"/>
+		<Parameter Name="ParamDateTo" DataType="System.String"/>
+	</Dictionary>
+
+	<ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" TopMargin="10" BottomMargin="10" LeftMargin="10" RightMargin="10">
+
+		<!-- ── ШАПКА ── -->
+		<PageHeaderBand Name="PageHeader1" Top="0" Width="1058" Height="118">
+
+			<ShapeObject Name="HdrBg" Left="0" Top="0" Width="1058" Height="66" Shape="Rectangle" FillColor="41,98,155" Border.Lines="None"/>
+			<ShapeObject Name="HdrAccent" Left="0" Top="0" Width="7" Height="66" Shape="Rectangle" FillColor="20,52,88" Border.Lines="None"/>
+
+			<TextObject Name="TxtTitle" Left="22" Top="7" Width="700" Height="30" Text="Аналитика продаж по категориям" Font="Segoe UI, 17, Bold" TextColor="255,255,255" HorzAlign="Left" VertAlign="Center"/>
+			<TextObject Name="TxtSub" Left="22" Top="40" Width="700" Height="18" Text="Online Store — аналитический отчёт" Font="Segoe UI, 9" TextColor="186,214,255" HorzAlign="Left" VertAlign="Center"/>
+
+			<TextObject Name="TxtDate" Left="722" Top="7" Width="336" Height="18" Text="[DateTime.Now.ToString(&quot;dd MMMM yyyy, HH:mm&quot;)]" Font="Segoe UI, 8" TextColor="186,214,255" HorzAlign="Right" VertAlign="Center" Padding="0,0,10,0"/>
+			<TextObject Name="TxtCnt" Left="722" Top="28" Width="336" Height="20" Text="Категорий: [Report.GetParameterValue(&quot;ParamCount&quot;)]" Font="Segoe UI, 9, Bold" TextColor="255,255,255" HorzAlign="Right" VertAlign="Center" Padding="0,0,10,0"/>
+
+			<!-- KPI-полоса -->
+			<ShapeObject Name="KpiBg" Left="0" Top="66" Width="1058" Height="30" Shape="Rectangle" FillColor="20,52,88" Border.Lines="None"/>
+
+			<TextObject Name="TxtPeriodLbl" Left="11" Top="66" Width="78" Height="30" Text="Период:" Font="Segoe UI, 8, Bold" TextColor="186,214,255" HorzAlign="Left" VertAlign="Center"/>
+			<TextObject Name="TxtPeriod" Left="90" Top="66" Width="364" Height="30" Text="[Report.GetParameterValue(&quot;ParamDateFrom&quot;)] — [Report.GetParameterValue(&quot;ParamDateTo&quot;)]" Font="Segoe UI, 8" TextColor="255,255,255" HorzAlign="Left" VertAlign="Center"/>
+
+			<TextObject Name="TxtKpiO" Left="453" Top="66" Width="196" Height="30" Text="Заказов: [Report.GetParameterValue(&quot;ParamTotalOrders&quot;)]" Font="Segoe UI, 8" TextColor="186,214,255" HorzAlign="Right" VertAlign="Center"/>
+			<TextObject Name="TxtKpiU" Left="649" Top="66" Width="210" Height="30" Text="Продано: [Report.GetParameterValue(&quot;ParamTotalUnits&quot;)] шт." Font="Segoe UI, 8" TextColor="186,214,255" HorzAlign="Right" VertAlign="Center"/>
+			<TextObject Name="TxtKpiR" Left="859" Top="66" Width="199" Height="30" Text="[Report.GetParameterValue(&quot;ParamTotal&quot;)] MDL" Font="Segoe UI, 9, Bold" TextColor="255,255,255" HorzAlign="Right" VertAlign="Center" Padding="0,0,10,0"/>
+
+			<!-- Разделитель -->
+			<ShapeObject Name="Sep" Left="0" Top="98" Width="1058" Height="2" Shape="Rectangle" FillColor="41,98,155" Border.Lines="None"/>
+
+			<!-- Заголовки колонок -->
+			<ShapeObject Name="ColBg" Left="0" Top="100" Width="1058" Height="18" Shape="Rectangle" FillColor="28,68,120" Border.Lines="None"/>
+			<TextObject Name="CH1" Left="0" Top="100" Width="238" Height="18" Text="Категория" Font="Segoe UI, 7.5, Bold" TextColor="186,214,255" HorzAlign="Left" VertAlign="Center" Padding="10,0,0,0"/>
+			<TextObject Name="CH2" Left="238" Top="100" Width="98" Height="18" Text="Заказов" Font="Segoe UI, 7.5, Bold" TextColor="186,214,255" HorzAlign="Center" VertAlign="Center"/>
+			<TextObject Name="CH3" Left="336" Top="100" Width="112" Height="18" Text="Продано" Font="Segoe UI, 7.5, Bold" TextColor="186,214,255" HorzAlign="Center" VertAlign="Center"/>
+			<TextObject Name="CH4" Left="448" Top="100" Width="134" Height="18" Text="Ср. цена" Font="Segoe UI, 7.5, Bold" TextColor="186,214,255" HorzAlign="Right" VertAlign="Center" Padding="0,0,4,0"/>
+			<TextObject Name="CH5" Left="582" Top="100" Width="112" Height="18" Text="Мин. цена" Font="Segoe UI, 7.5, Bold" TextColor="186,214,255" HorzAlign="Right" VertAlign="Center" Padding="0,0,4,0"/>
+			<TextObject Name="CH6" Left="694" Top="100" Width="112" Height="18" Text="Макс. цена" Font="Segoe UI, 7.5, Bold" TextColor="186,214,255" HorzAlign="Right" VertAlign="Center" Padding="0,0,4,0"/>
+			<TextObject Name="CH7" Left="806" Top="100" Width="252" Height="18" Text="Выручка (MDL)" Font="Segoe UI, 7.5, Bold" TextColor="186,214,255" HorzAlign="Right" VertAlign="Center" Padding="0,0,10,0"/>
+		</PageHeaderBand>
+
+		<!-- ── ДАННЫЕ ── -->
+		<DataBand Name="Data1" Top="0" Width="1058" Height="22" DataSource="SalesCat" EvenStylePriority="true">
+
+			<ShapeObject Name="EvenRow" Left="0" Top="0" Width="1058" Height="22" Shape="Rectangle" FillColor="240,246,255" Border.Lines="None" EvenVisible="true" OddVisible="false"/>
+
+			<TextObject Name="D1" Left="0" Top="0" Width="238" Height="22" Text="[SalesCat.category]" Font="Segoe UI, 8.5, Bold" TextColor="30,41,59" HorzAlign="Left" VertAlign="Center" Padding="10,0,0,0" Border.Lines="Bottom" Border.Color="210,227,252"/>
+			<TextObject Name="D2" Left="238" Top="0" Width="98" Height="22" Text="[SalesCat.orders_count]" Font="Segoe UI, 8.5" TextColor="71,85,105" HorzAlign="Center" VertAlign="Center" Border.Lines="Bottom" Border.Color="210,227,252"/>
+			<TextObject Name="D3" Left="336" Top="0" Width="112" Height="22" Text="[SalesCat.units_sold]" Font="Segoe UI, 8.5" TextColor="71,85,105" HorzAlign="Center" VertAlign="Center" Border.Lines="Bottom" Border.Color="210,227,252"/>
+			<TextObject Name="D4" Left="448" Top="0" Width="134" Height="22" Text="[SalesCat.avg_price]" Font="Segoe UI, 8.5" TextColor="71,85,105" HorzAlign="Right" VertAlign="Center" Padding="0,0,4,0" Border.Lines="Bottom" Border.Color="210,227,252" Format="Number" Format.DecimalDigits="2"/>
+			<TextObject Name="D5" Left="582" Top="0" Width="112" Height="22" Text="[SalesCat.min_price]" Font="Segoe UI, 8.5" TextColor="71,85,105" HorzAlign="Right" VertAlign="Center" Padding="0,0,4,0" Border.Lines="Bottom" Border.Color="210,227,252" Format="Number" Format.DecimalDigits="2"/>
+			<TextObject Name="D6" Left="694" Top="0" Width="112" Height="22" Text="[SalesCat.max_price]" Font="Segoe UI, 8.5" TextColor="71,85,105" HorzAlign="Right" VertAlign="Center" Padding="0,0,4,0" Border.Lines="Bottom" Border.Color="210,227,252" Format="Number" Format.DecimalDigits="2"/>
+			<TextObject Name="D7" Left="806" Top="0" Width="252" Height="22" Text="[SalesCat.revenue]" Font="Segoe UI, 9, Bold" TextColor="16,122,84" HorzAlign="Right" VertAlign="Center" Padding="0,0,10,0" Border.Lines="Bottom" Border.Color="210,227,252" Format="Number" Format.DecimalDigits="2"/>
+		</DataBand>
+
+		<!-- ── ИТОГ ── -->
+		<ReportSummaryBand Name="Summary1" Top="0" Width="1058" Height="56">
+			<ShapeObject Name="SumBg" Left="0" Top="6" Width="1058" Height="44" Shape="Rectangle" FillColor="41,98,155" Border.Lines="None"/>
+			<ShapeObject Name="SumAcc" Left="0" Top="6" Width="7" Height="44" Shape="Rectangle" FillColor="20,52,88" Border.Lines="None"/>
+
+			<TextObject Name="TxtSumLbl" Left="20" Top="6" Width="210" Height="44" Text="ИТОГО" Font="Segoe UI, 10, Bold" TextColor="255,255,255" HorzAlign="Left" VertAlign="Center"/>
+
+			<TextObject Name="TxtSumO" Left="230" Top="6" Width="252" Height="22" Text="Заказов: [Report.GetParameterValue(&quot;ParamTotalOrders&quot;)]" Font="Segoe UI, 8.5" TextColor="186,214,255" HorzAlign="Left" VertAlign="Center"/>
+			<TextObject Name="TxtSumU" Left="230" Top="28" Width="252" Height="22" Text="Продано: [Report.GetParameterValue(&quot;ParamTotalUnits&quot;)] шт." Font="Segoe UI, 8.5" TextColor="186,214,255" HorzAlign="Left" VertAlign="Center"/>
+
+			<TextObject Name="TxtSumVal" Left="481" Top="6" Width="577" Height="44" Text="[Report.GetParameterValue(&quot;ParamTotal&quot;)] MDL" Font="Segoe UI, 15, Bold" TextColor="255,255,255" HorzAlign="Right" VertAlign="Center" Padding="0,0,10,0"/>
+		</ReportSummaryBand>
+
+		<!-- ── КОЛОНТИТУЛ ── -->
+		<PageFooterBand Name="PageFooter1" Top="0" Width="1058" Height="18">
+			<ShapeObject Name="FtrLine" Left="0" Top="0" Width="1058" Height="2" Shape="Rectangle" FillColor="41,98,155" Border.Lines="None"/>
+			<TextObject Name="TxtFtrL" Left="0" Top="3" Width="630" Height="14" Text="© Online Store — конфиденциальный документ" Font="Segoe UI, 7" TextColor="148,163,184" HorzAlign="Left" VertAlign="Center" Padding="10,0,0,0"/>
+			<TextObject Name="TxtFtrR" Left="630" Top="3" Width="428" Height="14" Text="Страница [Page] из [TotalPages]" Font="Segoe UI, 7" TextColor="148,163,184" HorzAlign="Right" VertAlign="Center" Padding="0,0,10,0"/>
+		</PageFooterBand>
+
+	</ReportPage>
+</Report>

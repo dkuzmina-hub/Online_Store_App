@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01.01.2025" ReportInfo.Modified="01.01.2025" ReportInfo.CreatorVersion="2024.2.3">
+	<Dictionary>
+		<TableDataSource Name="AllOrders" ReferenceName="AllOrders" DataType="System.Int32" Enabled="true">
+			<Column Name="order_id" DataType="System.Int32"/>
+			<Column Name="client" DataType="System.String"/>
+			<Column Name="email" DataType="System.String"/>
+			<Column Name="date" DataType="System.String"/>
+			<Column Name="trans_status" DataType="System.String"/>
+			<Column Name="paym_status" DataType="System.String"/>
+			<Column Name="items_count" DataType="System.Int32"/>
+			<Column Name="total_sum" DataType="System.Decimal"/>
+		</TableDataSource>
+		<Parameter Name="ParamCount" DataType="System.String"/>
+		<Parameter Name="ParamTotal" DataType="System.String"/>
+	</Dictionary>
+
+	<ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" TopMargin="10" BottomMargin="10" LeftMargin="10" RightMargin="10">
+
+		<!-- ── ШАПКА ── -->
+		<PageHeaderBand Name="PageHeader1" Top="0" Width="1058" Height="90">
+
+			<!-- Основной фон шапки -->
+			<ShapeObject Name="HdrBg" Left="0" Top="0" Width="1058" Height="66" Shape="Rectangle" FillColor="41,98,155" Border.Lines="None"/>
+			<!-- Левый акцент -->
+			<ShapeObject Name="HdrAccent" Left="0" Top="0" Width="7" Height="66" Shape="Rectangle" FillColor="20,52,88" Border.Lines="None"/>
+
+			<TextObject Name="TxtTitle" Left="22" Top="8" Width="644" Height="30" Text="Полный список заказов" Font="Segoe UI, 17, Bold" TextColor="255,255,255" HorzAlign="Left" VertAlign="Center"/>
+			<TextObject Name="TxtSub" Left="22" Top="40" Width="644" Height="18" Text="Online Store — аналитический отчёт" Font="Segoe UI, 9" TextColor="186,214,255" HorzAlign="Left" VertAlign="Center"/>
+
+			<TextObject Name="TxtDate" Left="666" Top="10" Width="392" Height="18" Text="[DateTime.Now.ToString(&quot;dd MMMM yyyy, HH:mm&quot;)]" Font="Segoe UI, 8" TextColor="186,214,255" HorzAlign="Right" VertAlign="Center" Padding="0,0,10,0"/>
+			<TextObject Name="TxtCnt" Left="666" Top="32" Width="392" Height="22" Text="Заказов: [Report.GetParameterValue(&quot;ParamCount&quot;)]" Font="Segoe UI, 9, Bold" TextColor="255,255,255" HorzAlign="Right" VertAlign="Center" Padding="0,0,10,0"/>
+
+			<!-- Разделитель -->
+			<ShapeObject Name="HdrSep" Left="0" Top="66" Width="1058" Height="2" Shape="Rectangle" FillColor="20,52,88" Border.Lines="None"/>
+
+			<!-- Заголовки колонок -->
+			<ShapeObject Name="ColBg" Left="0" Top="68" Width="1058" Height="22" Shape="Rectangle" FillColor="28,68,120" Border.Lines="None"/>
+			<TextObject Name="CH1" Left="0" Top="68" Width="62" Height="22" Text="№" Font="Segoe UI, 7.5, Bold" TextColor="186,214,255" HorzAlign="Center" VertAlign="Center" Padding="10,0,0,0"/>
+			<TextObject Name="CH2" Left="62" Top="68" Width="188" Height="22" Text="Клиент" Font="Segoe UI, 7.5, Bold" TextColor="186,214,255" HorzAlign="Left" VertAlign="Center" Padding="6,0,0,0"/>
+			<TextObject Name="CH3" Left="249" Top="68" Width="207" Height="22" Text="Email" Font="Segoe UI, 7.5, Bold" TextColor="186,214,255" HorzAlign="Left" VertAlign="Center" Padding="6,0,0,0"/>
+			<TextObject Name="CH4" Left="456" Top="68" Width="109" Height="22" Text="Дата" Font="Segoe UI, 7.5, Bold" TextColor="186,214,255" HorzAlign="Center" VertAlign="Center"/>
+			<TextObject Name="CH5" Left="565" Top="68" Width="140" Height="22" Text="Доставка" Font="Segoe UI, 7.5, Bold" TextColor="186,214,255" HorzAlign="Center" VertAlign="Center"/>
+			<TextObject Name="CH6" Left="705" Top="68" Width="120" Height="22" Text="Оплата" Font="Segoe UI, 7.5, Bold" TextColor="186,214,255" HorzAlign="Center" VertAlign="Center"/>
+			<TextObject Name="CH7" Left="826" Top="68" Width="64" Height="22" Text="Поз." Font="Segoe UI, 7.5, Bold" TextColor="186,214,255" HorzAlign="Center" VertAlign="Center"/>
+			<TextObject Name="CH8" Left="890" Top="68" Width="168" Height="22" Text="Сумма (MDL)" Font="Segoe UI, 7.5, Bold" TextColor="186,214,255" HorzAlign="Right" VertAlign="Center" Padding="0,0,10,0"/>
+		</PageHeaderBand>
+
+		<!-- ── ДАННЫЕ ── -->
+		<DataBand Name="Data1" Top="0" Width="1058" Height="20" DataSource="AllOrders" EvenStylePriority="true">
+
+			<ShapeObject Name="EvenRow" Left="0" Top="0" Width="1058" Height="20" Shape="Rectangle" FillColor="240,246,255" Border.Lines="None" EvenVisible="true" OddVisible="false"/>
+
+			<TextObject Name="D1" Left="0" Top="0" Width="62" Height="20" Text="[AllOrders.order_id]" Font="Segoe UI, 8" TextColor="100,116,139" HorzAlign="Center" VertAlign="Center" Border.Lines="Bottom" Border.Color="210,227,252" Padding="10,0,0,0"/>
+			<TextObject Name="D2" Left="62" Top="0" Width="188" Height="20" Text="[AllOrders.client]" Font="Segoe UI, 8, Bold" TextColor="30,41,59" HorzAlign="Left" VertAlign="Center" Padding="6,0,0,0" Border.Lines="Bottom" Border.Color="210,227,252"/>
+			<TextObject Name="D3" Left="249" Top="0" Width="207" Height="20" Text="[AllOrders.email]" Font="Segoe UI, 7.5" TextColor="71,85,105" HorzAlign="Left" VertAlign="Center" Padding="6,0,0,0" Border.Lines="Bottom" Border.Color="210,227,252"/>
+			<TextObject Name="D4" Left="456" Top="0" Width="109" Height="20" Text="[AllOrders.date]" Font="Segoe UI, 8" TextColor="71,85,105" HorzAlign="Center" VertAlign="Center" Border.Lines="Bottom" Border.Color="210,227,252"/>
+			<TextObject Name="D5" Left="565" Top="0" Width="140" Height="20" Text="[AllOrders.trans_status]" Font="Segoe UI, 8" TextColor="71,85,105" HorzAlign="Center" VertAlign="Center" Border.Lines="Bottom" Border.Color="210,227,252"/>
+			<TextObject Name="D6" Left="705" Top="0" Width="120" Height="20" Text="[AllOrders.paym_status]" Font="Segoe UI, 8" TextColor="71,85,105" HorzAlign="Center" VertAlign="Center" Border.Lines="Bottom" Border.Color="210,227,252"/>
+			<TextObject Name="D7" Left="826" Top="0" Width="64" Height="20" Text="[AllOrders.items_count]" Font="Segoe UI, 8" TextColor="100,116,139" HorzAlign="Center" VertAlign="Center" Border.Lines="Bottom" Border.Color="210,227,252"/>
+			<TextObject Name="D8" Left="890" Top="0" Width="168" Height="20" Text="[AllOrders.total_sum]" Font="Segoe UI, 8, Bold" TextColor="16,122,84" HorzAlign="Right" VertAlign="Center" Padding="0,0,10,0" Border.Lines="Bottom" Border.Color="210,227,252" Format="Number" Format.DecimalDigits="2"/>
+		</DataBand>
+
+		<!-- ── ИТОГ ── -->
+		<ReportSummaryBand Name="Summary1" Top="0" Width="1058" Height="52">
+			<ShapeObject Name="SumBg" Left="0" Top="6" Width="1058" Height="40" Shape="Rectangle" FillColor="41,98,155" Border.Lines="None"/>
+			<ShapeObject Name="SumAcc" Left="0" Top="6" Width="7" Height="40" Shape="Rectangle" FillColor="20,52,88" Border.Lines="None"/>
+			<TextObject Name="TxtSumLbl" Left="20" Top="6" Width="252" Height="40" Text="ИТОГО" Font="Segoe UI, 10, Bold" TextColor="255,255,255" HorzAlign="Left" VertAlign="Center"/>
+			<TextObject Name="TxtSumCnt" Left="271" Top="6" Width="420" Height="40" Text="Заказов: [Report.GetParameterValue(&quot;ParamCount&quot;)]" Font="Segoe UI, 9" TextColor="186,214,255" HorzAlign="Left" VertAlign="Center"/>
+			<TextObject Name="TxtSumVal" Left="691" Top="6" Width="367" Height="40" Text="[Report.GetParameterValue(&quot;ParamTotal&quot;)] MDL" Font="Segoe UI, 13, Bold" TextColor="255,255,255" HorzAlign="Right" VertAlign="Center" Padding="0,0,10,0"/>
+		</ReportSummaryBand>
+
+		<!-- ── КОЛОНТИТУЛ ── -->
+		<PageFooterBand Name="PageFooter1" Top="0" Width="1058" Height="18">
+			<ShapeObject Name="FtrLine" Left="0" Top="0" Width="1058" Height="2" Shape="Rectangle" FillColor="41,98,155" Border.Lines="None"/>
+			<TextObject Name="TxtFtrL" Left="0" Top="3" Width="630" Height="14" Text="© Online Store — конфиденциальный документ" Font="Segoe UI, 7" TextColor="148,163,184" HorzAlign="Left" VertAlign="Center" Padding="10,0,0,0"/>
+			<TextObject Name="TxtFtrR" Left="630" Top="3" Width="428" Height="14" Text="Страница [Page] из [TotalPages]" Font="Segoe UI, 7" TextColor="148,163,184" HorzAlign="Right" VertAlign="Center" Padding="0,0,10,0"/>
+		</PageFooterBand>
+
+	</ReportPage>
+</Report>

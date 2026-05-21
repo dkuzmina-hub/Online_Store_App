@@ -1,0 +1,394 @@
+<Window x:Class="OnlineStoreApp.Views.DashboardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        Title="Dashboard — Аналитика"
+        Height="820" Width="1240"
+        WindowStartupLocation="CenterOwner"
+        Background="#F1F5F9"  Icon="/Images/app.ico">
+
+	<Window.Resources>
+		<Style x:Key="KpiCard" TargetType="Border">
+			<Setter Property="Background" Value="White"/>
+			<Setter Property="CornerRadius" Value="12"/>
+			<Setter Property="Padding" Value="20,16"/>
+			<Setter Property="BorderBrush" Value="#E2E8F0"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="Effect">
+				<Setter.Value>
+					<DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.06" Color="#000000"/>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<Style x:Key="ChartCard" TargetType="Border">
+			<Setter Property="Background" Value="White"/>
+			<Setter Property="CornerRadius" Value="12"/>
+			<Setter Property="Padding" Value="18,14"/>
+			<Setter Property="BorderBrush" Value="#E2E8F0"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="Effect">
+				<Setter.Value>
+					<DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.06" Color="#000000"/>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<Style x:Key="FilterLabel" TargetType="TextBlock">
+			<Setter Property="FontSize" Value="10"/>
+			<Setter Property="FontWeight" Value="SemiBold"/>
+			<Setter Property="Foreground" Value="#64748B"/>
+			<Setter Property="FontFamily" Value="Segoe UI"/>
+			<Setter Property="Margin" Value="0,0,0,4"/>
+		</Style>
+
+		<Style x:Key="KpiValue" TargetType="TextBlock">
+			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="FontWeight" Value="Bold"/>
+			<Setter Property="FontFamily" Value="Segoe UI"/>
+			<Setter Property="Foreground" Value="#0F172A"/>
+		</Style>
+
+		<Style x:Key="KpiLabel" TargetType="TextBlock">
+			<Setter Property="FontSize" Value="11"/>
+			<Setter Property="FontFamily" Value="Segoe UI"/>
+			<Setter Property="Foreground" Value="#64748B"/>
+			<Setter Property="Margin" Value="0,3,0,0"/>
+		</Style>
+
+		<Style x:Key="ChartTitle" TargetType="TextBlock">
+			<Setter Property="FontSize" Value="13"/>
+			<Setter Property="FontWeight" Value="SemiBold"/>
+			<Setter Property="FontFamily" Value="Segoe UI"/>
+			<Setter Property="Foreground" Value="#0F172A"/>
+			<Setter Property="Margin" Value="0,0,0,10"/>
+		</Style>
+
+		<Style x:Key="PrimaryButton" TargetType="Button">
+			<Setter Property="Background" Value="#2563EB"/>
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Padding" Value="16,0"/>
+			<Setter Property="FontFamily" Value="Segoe UI"/>
+			<Setter Property="FontSize" Value="12"/>
+			<Setter Property="FontWeight" Value="SemiBold"/>
+			<Setter Property="Cursor" Value="Hand"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border Background="{TemplateBinding Background}" CornerRadius="7"
+                                Padding="{TemplateBinding Padding}">
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</Border>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter Property="Background" Value="#1D4ED8"/>
+							</Trigger>
+							<Trigger Property="IsPressed" Value="True">
+								<Setter Property="Background" Value="#1E40AF"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<Style x:Key="SecondaryButton" TargetType="Button">
+			<Setter Property="Background" Value="#F1F5F9"/>
+			<Setter Property="Foreground" Value="#475569"/>
+			<Setter Property="BorderBrush" Value="#CBD5E1"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="Padding" Value="14,0"/>
+			<Setter Property="FontFamily" Value="Segoe UI"/>
+			<Setter Property="FontSize" Value="12"/>
+			<Setter Property="Cursor" Value="Hand"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="7" Padding="{TemplateBinding Padding}">
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</Border>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter Property="Background" Value="#E2E8F0"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<Style TargetType="DataGridColumnHeader">
+			<Setter Property="Background" Value="#F8FAFC"/>
+			<Setter Property="Foreground" Value="#475569"/>
+			<Setter Property="FontFamily" Value="Segoe UI"/>
+			<Setter Property="FontSize" Value="11"/>
+			<Setter Property="FontWeight" Value="SemiBold"/>
+			<Setter Property="Padding" Value="10,0"/>
+			<Setter Property="BorderBrush" Value="#E2E8F0"/>
+			<Setter Property="BorderThickness" Value="0,0,0,1"/>
+		</Style>
+	</Window.Resources>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="58"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<!-- HEADER -->
+		<Border Grid.Row="0" Background="#1E293B">
+			<Grid Margin="24,0">
+				<StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+					<TextBlock Text="📊" FontSize="20" VerticalAlignment="Center" Margin="0,0,12,0"/>
+					<StackPanel VerticalAlignment="Center">
+						<TextBlock Text="Dashboard — Аналитика" Foreground="White"
+                                   FontSize="16" FontWeight="Bold" FontFamily="Segoe UI"/>
+						<TextBlock Text="Статистика продаж интернет-магазина"
+                                   Foreground="#94A3B8" FontSize="11" FontFamily="Segoe UI"/>
+					</StackPanel>
+				</StackPanel>
+				<Button HorizontalAlignment="Right" Content="✕ Закрыть"
+                        Background="Transparent" Foreground="#94A3B8"
+                        BorderThickness="0" FontFamily="Segoe UI" FontSize="12"
+                        Cursor="Hand" Click="BtnClose_Click"/>
+			</Grid>
+		</Border>
+
+		<!-- FILTERS -->
+		<Border Grid.Row="1" Background="White"
+                BorderBrush="#E2E8F0" BorderThickness="0,0,0,1"
+                Padding="20,14,20,12">
+			<StackPanel>
+				<WrapPanel Orientation="Horizontal">
+					<StackPanel Margin="0,0,12,0">
+						<TextBlock Text="ДАТА С" Style="{StaticResource FilterLabel}"/>
+						<DatePicker x:Name="DpFrom" Width="128" Height="34" FontFamily="Segoe UI" FontSize="12"/>
+					</StackPanel>
+					<StackPanel Margin="0,0,16,0">
+						<TextBlock Text="ДАТА ПО" Style="{StaticResource FilterLabel}"/>
+						<DatePicker x:Name="DpTo" Width="128" Height="34" FontFamily="Segoe UI" FontSize="12"/>
+					</StackPanel>
+					<StackPanel Margin="0,0,12,0">
+						<TextBlock Text="КАТЕГОРИЯ" Style="{StaticResource FilterLabel}"/>
+						<ComboBox x:Name="CboCategory" Width="148" Height="34" FontFamily="Segoe UI" FontSize="12"/>
+					</StackPanel>
+					<StackPanel Margin="0,0,12,0">
+						<TextBlock Text="СТАТУС ДОСТАВКИ" Style="{StaticResource FilterLabel}"/>
+						<ComboBox x:Name="CboTransStatus" Width="130" Height="34" FontFamily="Segoe UI" FontSize="12">
+							<ComboBoxItem Content="Все" IsSelected="True"/>
+							<ComboBoxItem Content="completed"/>
+							<ComboBoxItem Content="shipped"/>
+							<ComboBoxItem Content="pending"/>
+							<ComboBoxItem Content="cancelled"/>
+						</ComboBox>
+					</StackPanel>
+					<StackPanel Margin="0,0,16,0">
+						<TextBlock Text="СТАТУС ОПЛАТЫ" Style="{StaticResource FilterLabel}"/>
+						<ComboBox x:Name="CboPaymStatus" Width="118" Height="34" FontFamily="Segoe UI" FontSize="12">
+							<ComboBoxItem Content="Все" IsSelected="True"/>
+							<ComboBoxItem Content="paid"/>
+							<ComboBoxItem Content="unpaid"/>
+							<ComboBoxItem Content="refunded"/>
+						</ComboBox>
+					</StackPanel>
+					<StackPanel Margin="0,0,8,0">
+						<TextBlock Text="ЦЕНА ОТ (MDL)" Style="{StaticResource FilterLabel}"/>
+						<TextBox x:Name="TxtPriceMin" Width="96" Height="34" FontFamily="Segoe UI" FontSize="12"
+                                 Text="0" Padding="8,0" VerticalContentAlignment="Center"/>
+					</StackPanel>
+					<StackPanel Margin="0,0,16,0">
+						<TextBlock Text="ЦЕНА ДО (MDL)" Style="{StaticResource FilterLabel}"/>
+						<TextBox x:Name="TxtPriceMax" Width="96" Height="34" FontFamily="Segoe UI" FontSize="12"
+                                 Text="999999" Padding="8,0" VerticalContentAlignment="Center"/>
+					</StackPanel>
+					<StackPanel Margin="0,0,16,0">
+						<TextBlock Text="ИМЯ КЛИЕНТА" Style="{StaticResource FilterLabel}"/>
+						<TextBox x:Name="TxtClientName" Width="130" Height="34" FontFamily="Segoe UI" FontSize="12"
+                                 Padding="8,0" VerticalContentAlignment="Center"/>
+					</StackPanel>
+					<StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
+						<Button Content="🔍  Применить" Style="{StaticResource PrimaryButton}"
+                                Height="34" Padding="16,0" Margin="0,0,8,0" Click="BtnApply_Click"/>
+						<Button Content="↺  Сбросить" Style="{StaticResource SecondaryButton}"
+                                Height="34" Padding="14,0" Click="BtnResetFilters_Click"/>
+					</StackPanel>
+				</WrapPanel>
+
+				<Border x:Name="PanelError" Margin="0,10,0,0"
+                        Background="#FEF2F2" CornerRadius="6"
+                        BorderBrush="#FECACA" BorderThickness="1"
+                        Padding="12,7" Visibility="Collapsed">
+					<TextBlock x:Name="TxtError" Foreground="#DC2626"
+                               FontSize="12" TextWrapping="Wrap" FontFamily="Segoe UI"/>
+				</Border>
+			</StackPanel>
+		</Border>
+
+		<!-- SCROLL CONTENT -->
+		<ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+			<StackPanel Margin="20,16,20,24">
+
+				<!-- KPI CARDS -->
+				<Grid Margin="0,0,0,14">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="12"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="12"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="12"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="12"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+
+					<Border Grid.Column="0" Style="{StaticResource KpiCard}">
+						<StackPanel>
+							<TextBlock Text="💰" FontSize="20" Margin="0,0,0,6"/>
+							<TextBlock x:Name="KpiRevenue" Text="—" Style="{StaticResource KpiValue}" Foreground="#2563EB"/>
+							<TextBlock Text="Общая выручка (MDL)" Style="{StaticResource KpiLabel}"/>
+						</StackPanel>
+					</Border>
+					<Border Grid.Column="2" Style="{StaticResource KpiCard}">
+						<StackPanel>
+							<TextBlock Text="🧾" FontSize="20" Margin="0,0,0,6"/>
+							<TextBlock x:Name="KpiOrders" Text="—" Style="{StaticResource KpiValue}" Foreground="#16A34A"/>
+							<TextBlock Text="Количество заказов" Style="{StaticResource KpiLabel}"/>
+						</StackPanel>
+					</Border>
+					<Border Grid.Column="4" Style="{StaticResource KpiCard}">
+						<StackPanel>
+							<TextBlock Text="📦" FontSize="20" Margin="0,0,0,6"/>
+							<TextBlock x:Name="KpiAvg" Text="—" Style="{StaticResource KpiValue}" Foreground="#D97706"/>
+							<TextBlock Text="Средний чек (MDL)" Style="{StaticResource KpiLabel}"/>
+						</StackPanel>
+					</Border>
+					<Border Grid.Column="6" Style="{StaticResource KpiCard}">
+						<StackPanel>
+							<TextBlock Text="📉" FontSize="20" Margin="0,0,0,6"/>
+							<TextBlock x:Name="KpiMin" Text="—" Style="{StaticResource KpiValue}" Foreground="#64748B"/>
+							<TextBlock Text="Мин. сумма заказа" Style="{StaticResource KpiLabel}"/>
+						</StackPanel>
+					</Border>
+					<Border Grid.Column="8" Style="{StaticResource KpiCard}">
+						<StackPanel>
+							<TextBlock Text="📈" FontSize="20" Margin="0,0,0,6"/>
+							<TextBlock x:Name="KpiMax" Text="—" Style="{StaticResource KpiValue}" Foreground="#DC2626"/>
+							<TextBlock Text="Макс. сумма заказа" Style="{StaticResource KpiLabel}"/>
+						</StackPanel>
+					</Border>
+				</Grid>
+
+				<!-- CHARTS ROW 1 -->
+				<Grid Margin="0,0,0,12">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="3*"/>
+						<ColumnDefinition Width="12"/>
+						<ColumnDefinition Width="2*"/>
+					</Grid.ColumnDefinitions>
+
+					<!-- Столбчатая -->
+					<Border Grid.Column="0" Style="{StaticResource ChartCard}">
+						<StackPanel>
+							<TextBlock Text="📊 Выручка по категориям (MDL)" Style="{StaticResource ChartTitle}"/>
+							<Canvas x:Name="CanvasBar" Height="220" Background="Transparent"
+                                    Loaded="CanvasBar_Loaded"/>
+						</StackPanel>
+					</Border>
+
+					<!-- Круговая -->
+					<Border Grid.Column="2" Style="{StaticResource ChartCard}">
+						<StackPanel>
+							<TextBlock Text="🥧 Заказы по статусам" Style="{StaticResource ChartTitle}"/>
+							<Canvas x:Name="CanvasPie" Height="190" Background="Transparent"
+                                    Loaded="CanvasPie_Loaded"/>
+							<ItemsControl x:Name="PieLegend" Margin="0,6,0,0">
+								<ItemsControl.ItemsPanel>
+									<ItemsPanelTemplate>
+										<WrapPanel Orientation="Horizontal"/>
+									</ItemsPanelTemplate>
+								</ItemsControl.ItemsPanel>
+							</ItemsControl>
+						</StackPanel>
+					</Border>
+				</Grid>
+
+				<!-- CHARTS ROW 2 -->
+				<Grid Margin="0,0,0,14">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="3*"/>
+						<ColumnDefinition Width="12"/>
+						<ColumnDefinition Width="2*"/>
+					</Grid.ColumnDefinitions>
+
+					<!-- Линейный -->
+					<Border Grid.Column="0" Style="{StaticResource ChartCard}">
+						<StackPanel>
+							<TextBlock Text="📈 Динамика выручки по датам" Style="{StaticResource ChartTitle}"/>
+							<Canvas x:Name="CanvasLine" Height="200" Background="Transparent"
+                                    Loaded="CanvasLine_Loaded"/>
+						</StackPanel>
+					</Border>
+
+					<!-- Гистограмма -->
+					<Border Grid.Column="2" Style="{StaticResource ChartCard}">
+						<StackPanel>
+							<TextBlock Text="📉 Заказы по месяцам" Style="{StaticResource ChartTitle}"/>
+							<Canvas x:Name="CanvasHist" Height="200" Background="Transparent"
+                                    Loaded="CanvasHist_Loaded"/>
+						</StackPanel>
+					</Border>
+				</Grid>
+
+				<!-- DETAIL DATAGRID -->
+				<Border Style="{StaticResource ChartCard}" Padding="0">
+					<StackPanel>
+						<Grid Margin="18,14,18,8">
+							<TextBlock Text="📋 Детализация заказов"
+                                       Style="{StaticResource ChartTitle}" Margin="0"
+                                       VerticalAlignment="Center"/>
+							<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
+								<TextBlock x:Name="TxtGridCount"
+                                           FontSize="12" Foreground="#64748B" FontFamily="Segoe UI"
+                                           Margin="0,0,14,0" VerticalAlignment="Center"/>
+								<Button Content="⬇ Экспорт TXT"
+                                        Style="{StaticResource SecondaryButton}"
+                                        Height="28" Padding="10,0" FontSize="11"
+                                        Click="BtnExportTxt_Click"/>
+							</StackPanel>
+						</Grid>
+						<DataGrid x:Name="DashGrid" Height="230"
+                                  BorderThickness="0"
+                                  CanUserAddRows="False" CanUserDeleteRows="False"
+                                  IsReadOnly="True" AutoGenerateColumns="False"
+                                  SelectionMode="Single"
+                                  RowBackground="White" AlternatingRowBackground="#F8FAFC"
+                                  GridLinesVisibility="Horizontal"
+                                  HorizontalGridLinesBrush="#E2E8F0"
+                                  FontFamily="Segoe UI" FontSize="12"
+                                  RowHeight="32" ColumnHeaderHeight="36">
+							<DataGrid.Columns>
+								<DataGridTextColumn Header="№ заказа"      Binding="{Binding id_order}"       Width="80"/>
+								<DataGridTextColumn Header="Пользователь"  Binding="{Binding username}"       Width="140"/>
+								<DataGridTextColumn Header="Дата"          Binding="{Binding date}"           Width="95"/>
+								<DataGridTextColumn Header="Товар"         Binding="{Binding name_prod}"      Width="155"/>
+								<DataGridTextColumn Header="Категория"     Binding="{Binding name_category}"  Width="115"/>
+								<DataGridTextColumn Header="Кол-во"        Binding="{Binding quantity}"       Width="65"/>
+								<DataGridTextColumn Header="Цена (MDL)"    Binding="{Binding price}"          Width="100"/>
+								<DataGridTextColumn Header="Сумма (MDL)"   Binding="{Binding total}"          Width="110"/>
+								<DataGridTextColumn Header="Статус заказа" Binding="{Binding trans_status}"   Width="115"/>
+								<DataGridTextColumn Header="Статус оплаты" Binding="{Binding paym_status}"   Width="112"/>
+							</DataGrid.Columns>
+						</DataGrid>
+					</StackPanel>
+				</Border>
+
+			</StackPanel>
+		</ScrollViewer>
+	</Grid>
+</Window>

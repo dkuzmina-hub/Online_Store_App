@@ -1,0 +1,49 @@
+<Window x:Class="OnlineStoreApp.Views.MyOrdersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Мои заказы" Height="600" Width="860"
+        WindowStartupLocation="CenterOwner"
+        Background="#F1F5F9"  Icon="/Images/app.ico">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#1E293B">
+            <Grid Margin="28,0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="📋" FontSize="20" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Мои заказы" Foreground="White"
+                                   FontSize="16" FontWeight="SemiBold" FontFamily="Segoe UI"/>
+                        <TextBlock x:Name="TxtSubtitle" Foreground="#94A3B8"
+                                   FontSize="12" FontFamily="Segoe UI"/>
+                    </StackPanel>
+                </StackPanel>
+                <Button Content="Закрыть" HorizontalAlignment="Right"
+                        Style="{StaticResource BtnSecondary}" Height="34"
+                        Padding="16,0" Click="BtnClose_Click"/>
+            </Grid>
+        </Border>
+
+        <!-- Orders list -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="24,16,24,8">
+            <StackPanel x:Name="OrdersPanel"/>
+        </ScrollViewer>
+
+        <!-- Footer -->
+        <Border Grid.Row="2" Background="White" BorderBrush="#E2E8F0"
+                BorderThickness="0,1,0,0" Padding="28,12">
+            <Grid>
+                <TextBlock x:Name="TxtTotal" FontFamily="Segoe UI" FontSize="13"
+                           Foreground="#64748B" VerticalAlignment="Center"/>
+                <Button Content="Обновить" HorizontalAlignment="Right"
+                        Style="{StaticResource BtnPrimary}" Height="34"
+                        Padding="16,0" Click="BtnRefresh_Click"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

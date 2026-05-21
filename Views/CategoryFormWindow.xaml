@@ -1,0 +1,43 @@
+<Window x:Class="OnlineStoreApp.Views.CategoryFormWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Категория"
+        Height="260" Width="380"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="#F8FAFC"
+        Icon="/Images/app.ico">
+
+	<Grid Margin="28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="TxtTitle" Grid.Row="0"
+                   FontSize="17" FontWeight="SemiBold" FontFamily="Segoe UI"
+                   Foreground="#0F172A" Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="1">
+            <Label Content="Название категории *"/>
+            <TextBox x:Name="TxtName" Margin="0,0,0,14"/>
+
+            <Border x:Name="PanelError" Background="#FEF2F2" CornerRadius="6"
+                    BorderBrush="#FECACA" BorderThickness="1"
+                    Padding="12,8" Visibility="Collapsed">
+                <TextBlock x:Name="TxtError" Foreground="#DC2626"
+                           FontSize="12" TextWrapping="Wrap" FontFamily="Segoe UI"/>
+            </Border>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal"
+                    HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button Content="Отмена" Style="{StaticResource SecondaryButton}"
+                    Width="90" Height="36" Margin="0,0,10,0"
+                    Click="BtnCancel_Click"/>
+            <Button Content="Сохранить" Style="{StaticResource PrimaryButton}"
+                    Width="100" Height="36" Click="BtnSave_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
