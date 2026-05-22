@@ -4,7 +4,6 @@
         Title="Категория"
         Height="260" Width="380"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize"
         Background="#F8FAFC"
         Icon="/Images/app.ico">
 
