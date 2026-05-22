@@ -32,19 +32,17 @@ namespace OnlineStoreApp.Views
 			{
 				if (_isEdit && _row != null)
 				{
-					// sp_UpdateCategory — UPDATE category SET name_category=@name WHERE id_category=@id
 					DatabaseHelper.ExecuteStoredProcedure("sp_UpdateCategory", new[]
 					{
 						new SqlParameter("@id_category",   _row.Row["id_category"]),
-						new SqlParameter("@name_category", name)
+						new SqlParameter("@name", name)
 					});
 				}
 				else
 				{
-					// sp_AddCategory — INSERT INTO category (name_category) VALUES (@name)
 					DatabaseHelper.ExecuteStoredProcedure("sp_AddCategory", new[]
 					{
-						new SqlParameter("@name_category", name)
+						new SqlParameter("@name", name)
 					});
 				}
 				DialogResult = true;
