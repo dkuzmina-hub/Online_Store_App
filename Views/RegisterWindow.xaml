@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Регистрация" Height="500" Width="400"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Background="#F8FAFC"  Icon="/Images/app.ico">
+<ScrollViewer VerticalScrollBarVisibility="Auto">
     <StackPanel Margin="36,28">
         <TextBlock Text="Создать аккаунт" FontSize="18" FontWeight="Bold"
                    FontFamily="Segoe UI" Foreground="#0F172A" Margin="0,0,0,24"/>
@@ -28,4 +29,5 @@
         <Button Content="Зарегистрироваться" Style="{StaticResource BtnPrimary}"
                 Height="38" FontSize="14" Click="BtnReg_Click"/>
     </StackPanel>
+</ScrollViewer>
 </Window>
