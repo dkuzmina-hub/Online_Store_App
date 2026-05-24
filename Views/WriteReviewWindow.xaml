@@ -4,7 +4,7 @@
         Title="Написать отзыв" Height="380" Width="420"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
         Background="#F8FAFC"  Icon="/Images/app.ico">
-
+<ScrollViewer VerticalScrollBarVisibility="Auto">
     <Grid Margin="28">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -78,4 +78,5 @@
                     Width="120" Height="36" Click="BtnSubmit_Click"/>
         </StackPanel>
     </Grid>
+ </ScrollViewer>
 </Window>
